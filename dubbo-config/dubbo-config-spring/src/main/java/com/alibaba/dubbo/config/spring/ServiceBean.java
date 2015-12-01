@@ -71,12 +71,19 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
 	    return SPRING_CONTEXT;
 	}
 
+    /**
+     *  实现 ApplicationContextAware 需要重写的方法
+     *  作用：当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有bean。
+     *       换句话说，就是这个类可以直接获取spring配置文件中，所有有引用到的bean对象。
+     * @param applicationContext
+     */
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 		SpringExtensionFactory.addApplicationContext(applicationContext);
 		if (applicationContext != null) {
 		    SPRING_CONTEXT = applicationContext;
-		    try {
+		    //用于将本 Listener 加入spring Listener 池
+            try {
 	            Method method = applicationContext.getClass().getMethod("addApplicationListener", new Class<?>[]{ApplicationListener.class}); // 兼容Spring2.0.1
 	            method.invoke(applicationContext, new Object[] {this});
 	            supportedApplicationListener = true;
@@ -100,6 +107,11 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
         this.beanName = name;
     }
 
+    /**
+     *  实现 ApplicationListener 需要重写的方法 ，为了实现监听
+     *  监听 ContextRefreshedEvent 事件
+     * @param event
+     */
     public void onApplicationEvent(ApplicationEvent event) {
         if (ContextRefreshedEvent.class.getName().equals(event.getClass().getName())) {
         	if (isDelay() && ! isExported() && ! isUnexported()) {
@@ -120,6 +132,26 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
         return supportedApplicationListener && (delay == null || delay.intValue() == -1);
     }
 
+
+    /**
+     * 实现 InitializingBean 需要重写 afterPropertiesSet 方法，用于bean的初始化
+     *
+     * spring初始化bean的时候，如果bean实现了InitializingBean接口，会自动调用afterPropertiesSet方法
+     *
+     * Q: 实现InitializingBean接口与在配置文件中指定init-method有什么不同？
+     * A: 都是用来初始化的  但是在初始化的时候 是先执行会自动调用afterPropertiesSet方法 后执行 init-method定义的方法
+     *  //<bean id="testInitializingBean" class="com.TestInitializingBean" init-method="testInit"></bean>
+     *
+     * 总结：
+     * 1：spring为bean提供了两种初始化bean的方式，实现InitializingBean接口，实现afterPropertiesSet方法，
+     *    或者在配置文件中同过init-method指定，两种方式可以同时使用
+     * 2：实现InitializingBean接口是直接调用afterPropertiesSet方法，比通过反射调用init-method指定的方法
+     *    效率相对来说要高点。但是init-method方式消除了对spring的依赖
+     * 3：如果调用afterPropertiesSet方法时出错，则不调用init-method指定的方法。
+     *
+     * link: http://blog.csdn.net/mqboss/article/details/7452331
+     *
+     */
     @SuppressWarnings({ "unchecked", "deprecation" })
 	public void afterPropertiesSet() throws Exception {
         if (getProvider() == null) {
@@ -251,6 +283,12 @@ public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean
         }
     }
 
+    /**
+     *  实现 DisposableBean 接口 所有重写的方法 用于bean销毁前的收尾工作
+     *  和 配置文件中自定义destroy-method类似，但是 是先执行 destroy--> destroy-method --> bean销毁
+     *
+     * @throws Exception
+     */
     public void destroy() throws Exception {
         unexport();
     }

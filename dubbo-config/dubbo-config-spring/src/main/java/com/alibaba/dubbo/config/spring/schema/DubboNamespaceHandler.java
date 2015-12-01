@@ -30,8 +30,8 @@ import com.alibaba.dubbo.config.spring.ReferenceBean;
 import com.alibaba.dubbo.config.spring.ServiceBean;
 
 /**
- * DubboNamespaceHandler
- * 
+ * spring dubbo 自定义标签 注册
+ *
  * @author william.liangf
  * @export
  */
