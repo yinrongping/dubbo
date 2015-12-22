@@ -32,7 +32,7 @@ import com.alibaba.dubbo.rpc.support.DemoService;
 import com.alibaba.dubbo.rpc.support.Type;
 
 /**
- * CompatibleFilterTest.java
+ * CompatibleFilterTest.java 兼容
  * 
  * @author tony.chenl
  */
@@ -64,6 +64,7 @@ public class CompatibleFilterFilterTest {
         EasyMock.expect(invoker.getUrl()).andReturn(url).anyTimes();
         EasyMock.replay(invoker);
         Result filterResult = compatibleFilter.invoke(invoker, invocation);
+        System.out.println(filterResult.toString());
         assertEquals(filterResult, result);
     }
 

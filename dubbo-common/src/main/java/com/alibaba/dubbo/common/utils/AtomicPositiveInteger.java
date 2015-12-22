@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * AtomicPositiveInteger
- * 
+ * 正数AtomInteger
  * @author william.liangf
  * @author ding.lid
  */

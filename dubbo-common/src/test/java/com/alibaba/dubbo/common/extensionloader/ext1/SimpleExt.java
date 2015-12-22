@@ -30,7 +30,13 @@ public interface SimpleExt {
     // 没有使用key的@Adaptive ！
     @Adaptive
     String echo(URL url, String s);
-    
+
+    /**
+     * 使用顺序 key1-->key2 --> impl1
+     * @param url
+     * @param s
+     * @return
+     */
     @Adaptive({"key1", "key2"})
     String yell(URL url, String s);
 

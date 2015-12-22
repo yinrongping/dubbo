@@ -17,6 +17,7 @@ package com.alibaba.dubbo.rpc.filter;
 
 import static org.junit.Assert.assertEquals;
 
+import com.alibaba.dubbo.rpc.Result;
 import org.junit.Test;
 
 import com.alibaba.dubbo.common.URL;
@@ -53,7 +54,9 @@ public class AccessLogFilterTest {
         URL url = URL.valueOf("test://test:11/test?accesslog=true&group=dubbo&version=1.1");
         Invoker<AccessLogFilterTest> invoker = new MyInvoker<AccessLogFilterTest>(url);
         Invocation invocation = new MockInvocation();
-        accessLogFilter.invoke(invoker, invocation);
+        Result result = accessLogFilter.invoke(invoker, invocation);
+        System.out.println(""+result.getValue());
+        assertEquals("alibaba",result.getValue());
     }
 
     @Test

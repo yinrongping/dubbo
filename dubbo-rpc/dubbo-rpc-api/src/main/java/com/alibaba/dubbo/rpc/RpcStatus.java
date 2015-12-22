@@ -24,7 +24,10 @@ import com.alibaba.dubbo.common.URL;
 
 /**
  * URL statistics. (API, Cached, ThreadSafe)
- * 
+ *
+ *
+ * 用于保存每个service和service中的method执行的情况（正在执行的方法数，执行时间等等）
+ *
  * @see com.alibaba.dubbo.rpc.filter.ActiveLimitFilter
  * @see com.alibaba.dubbo.rpc.filter.ExecuteLimitFilter
  * @see com.alibaba.dubbo.rpc.cluster.loadbalance.LeastActiveLoadBalance
@@ -139,21 +142,21 @@ public class RpcStatus {
 
     private final ConcurrentMap<String, Object> values = new ConcurrentHashMap<String, Object>();
 
-    private final AtomicInteger active = new AtomicInteger();
+    private final AtomicInteger active = new AtomicInteger(); //执行中的数量
 
-    private final AtomicLong total = new AtomicLong();
+    private final AtomicLong total = new AtomicLong(); //总数量
 
-    private final AtomicInteger failed = new AtomicInteger();
+    private final AtomicInteger failed = new AtomicInteger(); //失败的
 
-    private final AtomicLong totalElapsed = new AtomicLong();
+    private final AtomicLong totalElapsed = new AtomicLong();  //执行花费的总时间
 
-    private final AtomicLong failedElapsed = new AtomicLong();
+    private final AtomicLong failedElapsed = new AtomicLong(); //失败方法花费的总时间
 
-    private final AtomicLong maxElapsed = new AtomicLong();
+    private final AtomicLong maxElapsed = new AtomicLong(); //最大单次花费时间
 
-    private final AtomicLong failedMaxElapsed = new AtomicLong();
+    private final AtomicLong failedMaxElapsed = new AtomicLong(); //失败的最大单次花费时间
 
-    private final AtomicLong succeededMaxElapsed = new AtomicLong();
+    private final AtomicLong succeededMaxElapsed = new AtomicLong(); //成功的最大单次花费时间
     
     private RpcStatus() {}
 

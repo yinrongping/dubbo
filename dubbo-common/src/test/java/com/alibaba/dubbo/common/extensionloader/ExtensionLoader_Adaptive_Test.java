@@ -17,6 +17,7 @@ package com.alibaba.dubbo.common.extensionloader;
 
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
+import com.alibaba.dubbo.common.extensionloader.activate.ActivateExt1;
 import com.alibaba.dubbo.common.extensionloader.adaptive.HasAdaptiveExt;
 import com.alibaba.dubbo.common.extensionloader.adaptive.impl.HasAdaptiveExt_ManualAdaptive;
 import com.alibaba.dubbo.common.extensionloader.ext1.SimpleExt;
@@ -79,6 +80,7 @@ public class ExtensionLoader_Adaptive_Test {
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("key2", "impl2");
+        map.put("key1", "impl1");
         URL url = new URL("p1", "1.2.3.4", 1010, "path1", map);
 
         String echo = ext.yell(url, "haha");
@@ -315,5 +317,17 @@ public class ExtensionLoader_Adaptive_Test {
         
         Ext6Impl2 impl = (Ext6Impl2) ext;
         assertNull(impl.getList());
+    }
+
+
+    @Test
+    public void testSpi(){
+        ServiceLoader<ActivateExt1> s = ServiceLoader.load(ActivateExt1.class);
+        Iterator<ActivateExt1> searchs = s.iterator();
+        while (searchs.hasNext()) {
+            ActivateExt1 curSearch = searchs.next();
+            System.out.println(curSearch.echo("test"));
+        }
+
     }
 }

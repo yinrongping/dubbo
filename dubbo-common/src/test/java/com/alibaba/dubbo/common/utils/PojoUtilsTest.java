@@ -56,6 +56,8 @@ public class PojoUtilsTest {
     public void assertObject(Object data, Type type) {
         Object generalize = PojoUtils.generalize(data);
         Object realize = PojoUtils.realize(generalize, data.getClass(), type);
+        System.out.println(generalize.toString());
+        System.out.println(realize.toString());
         assertEquals(data, realize);
     }
     
@@ -104,6 +106,8 @@ public class PojoUtilsTest {
         
         Object generalize = PojoUtils.generalize(map);
         Object realize = PojoUtils.realize(generalize, Map.class);
+        System.out.println(generalize.toString());
+        System.out.println(realize.toString());
         assertEquals(map, realize);
     }
 

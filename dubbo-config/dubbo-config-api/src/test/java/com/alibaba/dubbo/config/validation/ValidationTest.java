@@ -41,6 +41,26 @@ import com.alibaba.dubbo.rpc.service.GenericService;
  */
 public class ValidationTest {
 
+    /**
+     *  1. Protocol$Adpative   url.getProtocol() == null ? "dubbo" : url.getProtocol()
+     *
+     *  2. ProxyFactory$Adpative   String extName = url.getParameter("proxy", "javassist")
+     *
+     *  3. Validation$Adpative     String extName = url.getParameter("validation", "jvalidation")
+     *
+     *  4. MonitorFactory$Adpative   String extName = ( url.getProtocol() == null ? "dubbo" : url.getProtocol() )
+     *
+     *  5. CacheFactory$Adpative     String extName = url.getParameter("cache", "lru")
+     *
+     *  6. Transporter$Adpative     String extName = url.getParameter("server", url.getParameter("transporter", "netty"))
+     *
+     *  7. Dispatcher$Adpative     String extName = url.getParameter("dispatcher", url.getParameter("dispather", url.getParameter("channel.handler", "all")));
+     *
+     *  8. ThreadPool$Adpative     String extName = url.getParameter("threadpool", "fixed")
+     *
+     *  9. Cluster$Adpative     String extName = url.getParameter("cluster", "failover")
+     *
+     */
     @Test
     public void testValidation() {
         ServiceConfig<ValidationService> service = new ServiceConfig<ValidationService>();

@@ -59,6 +59,7 @@ public class TpsLimitFilterTest {
             try {
                 filter.invoke(invoker, invocation);
             } catch (Exception e) {
+                System.out.println(i);
                 assertTrue(i >= 5);
                 throw e;
             }

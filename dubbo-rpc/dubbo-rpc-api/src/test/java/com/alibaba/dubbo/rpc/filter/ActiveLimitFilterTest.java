@@ -78,6 +78,7 @@ public class ActiveLimitFilterTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println(count);
         assertNotSame(0, count);
     }
 }

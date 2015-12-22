@@ -27,7 +27,9 @@ import com.alibaba.dubbo.rpc.RpcStatus;
 
 /**
  * LimitInvokerFilter
- * 
+ * 用于限制并发数
+ *  Constants.ACTIVES_KEY  并发数
+ *  Constants.TIMEOUT_KEY  超时毫秒数
  * @author william.liangf
  */
 @Activate(group = Constants.CONSUMER, value = Constants.ACTIVES_KEY)

@@ -31,7 +31,7 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.RpcResult;
 
 /**
- * CompatibleFilter
+ * CompatibleFilter 兼容
  * 
  * @author william.liangf
  */
